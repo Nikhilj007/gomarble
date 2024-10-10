@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Fetcher</title>
+</head>
+<body>
+  <h1>Review Fetcher</h1>
+  <form id="reviewForm">
+    <label for="url">Enter Page URL:</label>
+    <input type="text" id="url" placeholder="Enter the page URL" required>
+    <button type="submit">Fetch Reviews</button>
+  </form>
+  <h3 id="reviews_count"></h3>
+  <div style="display: flex; flex-direction: column; gap: 2rem; padding-left: 2rem;" id="reviews"></div>
+
+  <script>
+    document.getElementById('reviewForm').addEventListener('submit', async function (event) {
+      event.preventDefault(); // Prevent form from reloading the page
+
+      const url = document.getElementById('url').value;
+      const reviewsContainer = document.getElementById('reviews');
+      const reviewsCount= document.getElementById('reviews_count')
+      reviewsContainer.innerHTML = ''; // Clear previous reviews
+
+      try {
+        const response = await fetch(`/api/reviews?page=${encodeURIComponent(url)}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          reviewsCount.innerHTML =`Number of reviews : ${data.reviews_count}`;
+
+          const reviewsContainer = document.getElementById('reviews')
+        
+          data.reviews.forEach(review => {
+            const reviewElement = document.createElement('div')
+            reviewElement.innerHTML = `
+                <h4 class="review-title" >${review.title}</h4>
+                <div class="review-body">${review.body}</div>
+                <div class="review-rating">Rating: ${'★'.repeat(review.rating)}</div>
+                <div class="reviewer-name">- ${review.reviewer}</div>
+              `;
+
+              reviewsContainer.appendChild(reviewElement);;
+          });
+        } else {
+          reviewsContainer.innerHTML = `<p>Error: ${data.error}</p>`;
+        }
+      } catch (error) {
+        reviewsContainer.innerHTML = `<p>Request failed: ${error.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
