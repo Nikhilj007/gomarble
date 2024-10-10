@@ -106,7 +106,7 @@ async function getSelectorsFromLLM(html) {
 
   
 
-let cleanedResponse = response.replace(/```javascript|```/g, '').trim();
+let cleanedResponse = response.data.choices[0].message.content.replace(/```javascript|```/g, '').trim();
 
 const selectors = eval(`(${cleanedResponse})`);
 
