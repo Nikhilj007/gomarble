@@ -64,7 +64,7 @@ graph TD
 ### Frontend: GET /
 
 <img width="613" alt="image" src="https://github.com/user-attachments/assets/6755bee7-ebb0-4ceb-b382-52fd2dae5d21">
-![Screenshot 2024-10-11 022711](https://github.com/user-attachments/assets/17a861f0-62cc-4a77-aa53-997869e08beb)
+<img width="613" alt="image" src="https://github.com/user-attachments/assets/17a861f0-62cc-4a77-aa53-997869e08beb">
 
 
 ### Endpoint: GET /api/reviews
